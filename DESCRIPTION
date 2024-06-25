@@ -1,0 +1,30 @@
+Package: ra
+Version: 0.0.0.9000
+Title: A minimal TileDB-backed lazy multi-dimensional array implementation with metadata
+Description: The {ra} package provides a wrapper around the low-level {tiledb}
+    API and {jsonlite}, to implement a minimal lazy multi-dimensional array
+    with arbitrary metadata support.
+Authors@R:
+    c(
+        person(
+            given = "Bart",
+            family = "Rogiers",
+            email = "bart.rogiers@sckcen.be",
+            role = c("cre", "aut"),
+            comment = c(
+              ORCID = "0000-0002-8836-0988",
+              url = "<https://rogiersbart.github.io>"
+            )
+        ),
+        person("SCK CEN", role = c("cph", "fnd"))
+    )
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    jsonlite,
+    std (>= 0.0.0.9000),
+    tiledb
+RoxygenNote: 7.3.1
+Remotes: 
+    rogiersbart/std

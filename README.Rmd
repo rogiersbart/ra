@@ -1,0 +1,78 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# The {ra} R package<img src="man/figures/logo.png" align="right" width="25%"/><br><small><font color="#999">A minimal TileDB-backed lazy multi-dimensional array implementation with metadata</font></small>
+
+<!-- badges: start -->
+[![GitHub R package version](https://img.shields.io/github/r-package/v/rogiersbart/ra?label=version)](https://github.com/rogiersbart/ra)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![CRAN status](https://www.r-pkg.org/badges/version/ra.svg)](https://CRAN.R-project.org/package=ra)
+<!-- badges: end -->
+
+The {ra} R package provides a wrapper around the low-level
+{[tiledb](https://tiledb-inc.github.io/TileDB-R/)} API and
+{[jsonlite](https://jeroen.r-universe.dev/jsonlite)}, to implement a minimal
+lazy multi-dimensional array with arbitrary metadata support.
+
+The motivation for {ra} comes from the fact that the high-level {tiledb} API
+(square bracket subsetting and subassignment) for dense arrays is limited only to [2D for
+subarray writes](https://github.com/TileDB-Inc/TileDB-R/blob/47b3185f3f696072060c0255a3b1605e9fb33a16/R/TileDBArray.R#L1469), and [3D for subarray reads](https://github.com/TileDB-Inc/TileDB-R/blob/47b3185f3f696072060c0255a3b1605e9fb33a16/R/TileDBArray.R#L532). Additionally, metadata support is limited to strings, while we 
+can get arbitrarily complex metadata through the use of JSON.
+
+# Install
+
+You can install the latest version of {ra} from GitHub with the following:
+
+```{r}
+#| eval: false
+if (!require(pak)) install.packages("pak")
+pak::pak("rogiersbart/ra")
+```
+
+# Use
+
+```{r example}
+ra <- ra::ra(5, 4, 2)
+dim(ra)
+
+# read
+ra[1:5,1:2,1:2]
+ra[1,,]
+ra[1]
+ra[1, , 1]
+ra[]
+
+# write
+ra[1,1,1] <- 0L
+ra[3,1:4,2] <- rep(1, 4)
+ra[,4, 2] <- rep(3, 5)
+ra[]
+
+# squash
+fs::dir_info(ra$path, recurse = TRUE)$size |> sum()
+ra::squash(ra)
+fs::dir_info(ra$path, recurse = TRUE)$size |> sum()
+
+# metadata
+ra::metadata(ra)
+ra::metadata(ra) <- list(name = "Demo {ra} array", purpose = "Demonstrate use")
+ra::metadata(ra)
+```
+
+# Note
+
+Both {[lazyarray](https://cran.r-project.org/package=lazyarray)} and its
+successor {[filearray](https://cran.r-project.org/package=filearray)} provide
+similar functionality.

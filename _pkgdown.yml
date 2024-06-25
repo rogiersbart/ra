@@ -1,0 +1,17 @@
+home:
+  title: The {ra} R package
+  description: A minimal TileDB-backed lazy multi-dimensional array implementation with metadata
+url: https://rogiersbart.github.io/ra
+authors:
+  Bart Rogiers:
+    href: https://rogiersbart.github.io
+  SCK CEN:
+    href: https://www.sckcen.be
+navbar:
+  components:
+    home:
+      icon: fa-home fa-lg
+      href: index.html
+  structure:
+    left:  [home, intro, articles, tutorials, reference, news]
+    right: [search, github]
